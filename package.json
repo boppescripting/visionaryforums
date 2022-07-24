@@ -1,0 +1,25 @@
+{
+  "name": "visionaryforums",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "backend": "cd server && npm run devStart",
+    "dev": "concurrently \"npm run backend\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trainordevs/visionaryforums.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trainordevs/visionaryforums/issues"
+  },
+  "homepage": "https://github.com/trainordevs/visionaryforums#readme",
+  "dependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
