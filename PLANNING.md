@@ -1,5 +1,4 @@
 React based forums framework
-
 - Categories (+ permissions)
 - Forums (+ permissions)
 - User profiles
@@ -7,3 +6,11 @@ React based forums framework
 - Group Permissions
 - Website admin
 - Website staff
+
+----
+
+Install Script
+- Input database information
+- Create basic tables
+  - users
+- Create admin account
