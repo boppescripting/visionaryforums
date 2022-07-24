@@ -1,31 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-import Axios from "axios";
-
-// Components
-import Nav from './components/Nav';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
 
 function App() {
-  const [userCount, setUserCount] = useState(0);
-
-  const insert = () => {
-    const const_vals = ['test', 'testPassword', 'testEmail']
-    Axios.post(process.env.REACT_APP_APILINK + 'insert/user', {values: const_vals}).then(() => {})
-    setUserCount((prev) => prev + 1)
-  }
-
-  useEffect(() => {
-    Axios.get(process.env.REACT_APP_APILINK + 'get/users').then((response) => {
-      setUserCount(response.data.length)
-    });
-  }, [])
-
   return (
-    <div className="App">
-      {/* <Nav /> */}
-      <p>User Count: {userCount}</p>
-      <button onClick={insert}>Add user</button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/dashboard" element={<><Navbar /><Dashboard/></>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
