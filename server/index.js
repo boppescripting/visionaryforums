@@ -5,27 +5,15 @@ const mysql = require('mysql');
 const cors = require('cors');
 
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'visionaryforums'
+    host: process.env.REACT_APP_DB_HOST,
+    user: process.env.REACT_APP_DB_USER,
+    password: process.env.REACT_APP_DB_PASS,
+    database: process.env.REACT_APP_DB_NAME
 });
 
-const corsOpts = {
-    origin: '*',
-  
-    methods: [
-      'GET',
-      'POST',
-    ],
-  
-    allowedHeaders: [
-      'Content-Type',
-    ],
-  };
-app.use(cors(corsOpts));
+app.use(cors({ origin: '*', methods: [ 'GET', 'POST', ], allowedHeaders: [ 'Content-Type', ], }));
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/api/get/users', (req, res) => {
   const sqlQuery = "SELECT * FROM users"
@@ -41,6 +29,5 @@ app.post('/api/insert/user', (req, res) => {
     db.query(sqlInsert, [values], (err, result) => {});
 });
 
-app.listen(3001, () => {
-    console.log('running')
-});
+app.listen(process.env.REACT_APP_API_PORT, () => {});
+// app.listen(3001, () => {});
