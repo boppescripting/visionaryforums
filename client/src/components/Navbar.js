@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    const axiosJWT = axios.create();
+    const checkToken = async () => {
+        const response = await axiosJWT.get(process.env.REACT_APP_APILINK + 'checkToken', {});
+        setToken(response.data);
+    }
+
     const history = useNavigate();
 
     const Logout = async () => {
         try {
             await axios.delete(process.env.REACT_APP_APILINK + 'logout');
+            setToken('');
             history("/");
         } catch (error) {
             console.log(error);
         }
     }
+
+    const Login = () => ( history('/login') )
+    const Register = () => ( history('/register') )
 
     return (
         <nav className="navbar is-light" role="navigation" aria-label="main navigation">
@@ -31,17 +48,19 @@ const Navbar = () => {
 
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <a href="/" className="navbar-item">
-                            Home
-                        </a>
+                        {token
+                        ? <><a href="/" className="navbar-item">Home</a><a href="/dashboard" className="navbar-item">Dashboard</a></>
+                        : <></>
+                        }
                     </div>
 
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <button onClick={Logout} className="button is-light">
-                                    Log Out
-                                </button>
+                                {token
+                                ? <button onClick={Logout} className="button is-light">Log Out</button>
+                                : <><button onClick={Login} className="button is-light">Login</button><button onClick={Register} className="button is-light">Register</button></>
+                                }
                             </div>
                         </div>
                     </div>
